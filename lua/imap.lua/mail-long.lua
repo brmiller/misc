@@ -17,7 +17,15 @@
 --
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-- Widget looks like:
+-- Inbox: 2/3/4
+-- Click to popup list of inbox messages
 --
+-- Change username and password, and server options below (if you don't use gmail)
+
+imap_user = "yourusername"
+imap_pass = "yourpassword"
 
 require("imap")
 
@@ -47,12 +55,6 @@ w_imap.text = "Inbox: -/-/-"
 -- w_imap.mouse_enter-function.
 o_imap = imap.new("imap.gmail.com", 993, "sslv3", "Inbox", 5)
 _, o_imap.errmsg = o_imap:connect()
-
--- Load external file with user/pass information 
---
--- The login credentials for my imap account are defined in
--- this external file that never gets published.
-require("secrets")
 
 -- Login using username and passowrd
 _, o_imap.errmsg = o_imap:login(imap_user, imap_pass)
