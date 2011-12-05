@@ -77,11 +77,11 @@ w_imap.mouse_leave = function ()
 		     end
 
 -- What to do when we click on widget
-w_imap:buttons({
+w_imap:buttons(awful.util.table.join(
 		  -- Left mouse button: Fetch information on
 		  -- unread & recent messages and display them
 		  -- using naughty.popup.
-		  button({ }, 1, function()
+		  awful.button({ }, 1, function()
 				    local messages = {}
 				    local content = ""
 				    -- The fetch function takes 3 optional arguments: fetch_recent (default:
@@ -128,7 +128,7 @@ w_imap:buttons({
 		  
 		  -- Right mouse button: Logout if the client is logged in and login, if the client is logged
 		  -- out.
-		  button({ }, 3, function()
+		  awful.button({ }, 3, function()
 				    if o_imap.logged_in then
 				       o_imap:logout()
 				       w_imap.text = "Inbox: -/-/-"
@@ -138,10 +138,10 @@ w_imap:buttons({
 				       w_imap.text = "Inbox: ?/?/?"
 				    end
 				 end)
-	       })
+	       ))
 
 -- Finally: Register a time to update mailbox information. Check once per minute seems okay.
-awful.hooks.timer.register(60, function ()
+mytimer:add_signal("timeout", function()
 				  if o_imap.logged_in then
 				     -- The check() function returns a table with the number of unread, recent
 				     -- and total messages in the mailbox.
@@ -164,3 +164,4 @@ awful.hooks.timer.register(60, function ()
 				     end
 				  end
 			       end)
+mytimer:start()
