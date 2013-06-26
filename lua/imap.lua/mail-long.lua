@@ -141,6 +141,7 @@ w_imap:buttons(awful.util.table.join(
 	       ))
 
 -- Finally: Register a time to update mailbox information. Check once per minute seems okay.
+mytimer = timer({ timeout = 30 })
 mytimer:add_signal("timeout", function()
 				  if o_imap.logged_in then
 				     -- The check() function returns a table with the number of unread, recent
